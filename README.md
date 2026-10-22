@@ -43,6 +43,21 @@ tienda-native/
 | `rabbitmq` | EC2 `t3.medium` que en el arranque (`user_data`) instala Docker y ejecuta el docker-compose del clúster; usuario y contraseña generados con `random_password`; AMQP abierto solo al security group de ECS |
 | `amplify` | App del front (importada) con la regla SPA y las variables `VITE_*` tomadas de los demás módulos |
 
+## Usuarios de prueba
+
+Terraform crea dos usuarios en Cognito. Sus contraseñas **temporales** se definen en `terraform.tfvars`, que no se versiona, y Cognito pide cambiarlas en el primer ingreso.
+
+| Usuario | Variable con la contraseña temporal | Grupo | Puede |
+|---|---|---|---|
+| `test@tiendanative.com` | `test_user_password` | `editores` | consultar, crear, editar y eliminar (`productos/read` + `productos/write`) |
+| `lector@tiendanative.com` | `lector_user_password` | `lectores` | solo consultar (`productos/read`) → crear da **403** |
+
+Para entregar acceso a una cuenta ya desplegada, las credenciales se comparten por un canal privado, nunca en el repositorio ni en la app. Para recuperar el acceso de un usuario, se le asigna una contraseña temporal nueva:
+
+```bash
+aws cognito-idp admin-set-user-password --user-pool-id <pool> --username test@tiendanative.com --password '<nueva>' --no-permanent
+```
+
 ## Uso
 
 1. Copia el archivo de variables y complétalo:
