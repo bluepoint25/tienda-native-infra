@@ -1,0 +1,10 @@
+# Cada microservicio y el front tienen su propio repositorio
+tienda-native-frontend/
+tienda-native-backend/
+ms-mensajeria/
+
+# IDE y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,24 @@
+# Copiar como terraform.tfvars y completar con los valores de tu cuenta del Learner Lab
+aws_region   = "us-east-1"
+project_name = "tienda-native"
+environment  = "dev"
+
+# VPC por defecto del lab y dos subredes públicas (aws ec2 describe-subnets)
+vpc_id     = "vpc-xxxxxxxx"
+subnet_ids = ["subnet-aaaaaaaa", "subnet-bbbbbbbb"]
+
+# Imagen de ms-productos en ECR (la publica scripts/publicar-ecs.ps1)
+docker_image = "<cuenta>.dkr.ecr.us-east-1.amazonaws.com/tienda-native-backend:latest"
+
+# Contraseñas temporales de los usuarios de prueba (Cognito pide cambiarlas en el primer login)
+test_user_password = "CambiaEsto123!"
+
+# Usuario de solo lectura (grupo lectores)
+lector_user_email    = "lector@tiendanative.com"
+lector_user_password = "CambiaEsto123!"
+
+# Tu IP pública (curl https://checkip.amazonaws.com) para abrir el dashboard de RabbitMQ
+admin_cidr = "0.0.0.0/32"
+
+# Variable heredada del módulo Amazon MQ (no se usa con el clúster en EC2)
+rabbitmq_password = "no-se-usa"

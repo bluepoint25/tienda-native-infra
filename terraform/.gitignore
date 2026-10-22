@@ -1,0 +1,23 @@
+# Estado y planes: contienen contraseñas e IDs reales de la cuenta
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate*
+tfplan
+*.tfplan
+
+# Proveedores descargados (el .terraform.lock.hcl SÍ se versiona: fija las versiones)
+.terraform/
+
+# Variables con secretos: se versiona solo el ejemplo
+terraform.tfvars
+!terraform.tfvars.example
+
+# Zip que Terraform genera para la Lambda
+modules/cognito/user-token-ms.zip
+
+# IDE y sistema
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

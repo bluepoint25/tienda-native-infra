@@ -1,0 +1,32 @@
+#!/bin/bash
+# Arranque de la EC2: instala Docker + Compose y levanta el clúster de RabbitMQ
+set -euxo pipefail
+
+dnf install -y docker
+systemctl enable --now docker
+
+mkdir -p /usr/local/lib/docker/cli-plugins
+curl -fsSL https://github.com/docker/compose/releases/download/v2.29.7/docker-compose-linux-x86_64 \
+  -o /usr/local/lib/docker/cli-plugins/docker-compose
+chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+usermod -aG docker ec2-user
+
+mkdir -p /opt/rabbitmq-cluster
+cd /opt/rabbitmq-cluster
+
+cat > docker-compose.yml <<'COMPOSE'
+${docker_compose}
+COMPOSE
+
+cat > rabbitmq.conf <<'CONF'
+${rabbitmq_conf}
+CONF
+
+cat > .env <<'ENV'
+RABBITMQ_USER=${usuario}
+RABBITMQ_PASSWORD=${password}
+RABBITMQ_ERLANG_COOKIE=${erlang_cookie}
+ENV
+chmod 600 .env
+
+docker compose up -d
