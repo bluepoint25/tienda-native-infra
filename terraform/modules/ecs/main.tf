@@ -10,6 +10,8 @@ locals {
     { name = "RABBITMQ_ADDRESSES", value = var.rabbitmq_addresses },
     { name = "RABBITMQ_USER", value = var.rabbitmq_username },
     { name = "RABBITMQ_PASSWORD", value = var.rabbitmq_password },
+    # El dominio de Amplify cambia en cada cuenta: sin esto Spring rechazaría el CORS del front
+    { name = "CORS_ALLOWED_ORIGINS", value = var.cors_allowed_origins },
   ]
 }
 

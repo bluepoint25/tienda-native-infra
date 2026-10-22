@@ -59,6 +59,11 @@ output "ecs_mensajeria_service_name" {
   value = module.ecs.mensajeria_service_name
 }
 
+output "amplify_app_id" {
+  value       = module.amplify.app_id
+  description = "Para lanzar la primera compilación: aws amplify start-job --app-id <id> --branch-name main --job-type RELEASE"
+}
+
 output "amplify_url" {
   value       = module.amplify.url
   description = "URL pública del front (va en callback/logout de Cognito)"

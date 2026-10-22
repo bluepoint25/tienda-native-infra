@@ -1,50 +1,39 @@
 variable "aws_region" {
   type        = string
   default     = "us-east-1"
-  description = "Nombre del proyecto"
+  description = "Región de AWS (el Learner Lab trabaja en us-east-1)"
 }
+
 variable "project_name" {
   type        = string
   default     = "tienda-native"
-  description = "Nombre del proyecto"
+  description = "Prefijo de los nombres de todos los recursos"
 }
 
 variable "environment" {
   type        = string
   default     = "dev"
-  description = "ambiente (dev,staging,prod)"
-
+  description = "Ambiente (dev, staging, prod)"
 
   validation {
     condition     = contains(["dev", "staging", "prod"], var.environment)
-    error_message = "El enviroment debe ser dev, staging o prod."
+    error_message = "El environment debe ser dev, staging o prod."
   }
 }
+
 variable "vpc_id" {
-  description = "VPC ID"
+  description = "VPC por defecto del lab"
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "Lista de subnets"
+  description = "Subredes públicas de esa VPC (al menos una en una zona que ofrezca t3.medium)"
   type        = list(string)
-}
-
-variable "docker_image" {
-  description = "URL de la imagen Docker"
-  type        = string
-  default     = "nginx:latest"
 }
 
 variable "admin_cidr" {
   description = "IP pública del administrador (/32): única que puede abrir el dashboard de RabbitMQ"
   type        = string
-}
-
-variable "amplify_app_id" {
-  description = "ID de la app de Amplify creada en la consola (se importa)"
-  type        = string
-  default     = "d2zvrnvwyv08pa"
 }
 
 variable "amplify_app_name" {
@@ -53,8 +42,16 @@ variable "amplify_app_name" {
 }
 
 variable "frontend_repository" {
-  type    = string
-  default = "https://github.com/bluepoint25/Tienda-native"
+  description = "Repositorio de GitHub del frontend (un fork propio si se reproduce en otra cuenta)"
+  type        = string
+  default     = "https://github.com/bluepoint25/Tienda-native"
+}
+
+variable "github_access_token" {
+  description = "Token de GitHub (permiso repo) para que Amplify se conecte al repositorio al crear la app"
+  type        = string
+  sensitive   = true
+  default     = null
 }
 
 variable "lector_user_email" {
@@ -71,12 +68,6 @@ variable "test_user_password" {
 
 variable "lector_user_password" {
   description = "Contraseña temporal del usuario lector"
-  type        = string
-  sensitive   = true
-}
-
-variable "rabbitmq_password" {
-  description = "Contraseña de RabbitMQ"
   type        = string
   sensitive   = true
 }

@@ -1,8 +1,9 @@
 # App de Amplify conectada al repositorio: compila en cada push a main (amplify.yml del repo)
 resource "aws_amplify_app" "front" {
-  name       = var.app_name
-  repository = var.repository
-  platform   = "WEB"
+  name         = var.app_name
+  repository   = var.repository
+  access_token = var.github_access_token
+  platform     = "WEB"
 
   # SPA: cualquier ruta sin extensión de archivo estático sirve index.html (si no, /callback daría 404)
   custom_rule {
@@ -11,7 +12,7 @@ resource "aws_amplify_app" "front" {
     status = "200"
   }
 
-  # El token de GitHub se configuró al conectar el repo en la consola; Terraform no lo conoce ni debe pisarlo
+  # El token solo se usa al crear la app (AWS no lo devuelve): cambiarlo después no debe recrear nada
   lifecycle {
     ignore_changes = [access_token, oauth_token, build_spec]
   }

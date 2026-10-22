@@ -8,6 +8,12 @@ variable "repository" {
   type        = string
 }
 
+variable "github_access_token" {
+  type      = string
+  sensitive = true
+  default   = null
+}
+
 variable "cognito_user_pool_id" {
   type = string
 }

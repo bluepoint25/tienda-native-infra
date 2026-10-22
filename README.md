@@ -21,15 +21,25 @@ Amplify (React) ──JWT──► API Gateway ──► ms-productos  (ECS Farg
 | [ms-mensajeria](https://github.com/bluepoint25/ms-mensajeria) | Consumidores, DLQ, administrador de RabbitMQ y docker-compose del clúster |
 | **tienda-native-infra** (este) | Terraform + `scripts/publicar-ecs.ps1` |
 
-Terraform lee el docker-compose del clúster desde `../ms-mensajeria/rabbitmq-cluster`, así que los repos deben clonarse **lado a lado**:
+Terraform y `scripts/publicar-ecs.ps1` buscan los microservicios **dentro** de este repo, con estos nombres exactos de carpeta (están en el `.gitignore`):
+
+```bash
+git clone https://github.com/bluepoint25/tienda-native-infra.git tienda-native
+cd tienda-native
+git clone https://github.com/bluepoint25/ms-productos.git tienda-native-backend
+git clone https://github.com/bluepoint25/ms-mensajeria.git ms-mensajeria
+git clone https://github.com/bluepoint25/Tienda-native.git tienda-native-frontend
+```
 
 ```
-tienda-native/
-├── tienda-native-infra/   (este repo: terraform/, scripts/)
-├── tienda-native-backend/ (ms-productos)
-├── ms-mensajeria/
+tienda-native/               (este repo)
+├── terraform/  scripts/
+├── tienda-native-backend/   (ms-productos)
+├── ms-mensajeria/           (incluye rabbitmq-cluster/docker-compose.yml)
 └── tienda-native-frontend/
 ```
+
+El paso a paso completo, desde cero y para la presentación, está en [MANUAL.md](MANUAL.md).
 
 ## Módulos
 

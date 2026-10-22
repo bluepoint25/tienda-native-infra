@@ -37,6 +37,11 @@ variable "rabbitmq_password" {
   sensitive = true
 }
 
+variable "cors_allowed_origins" {
+  description = "Orígenes permitidos por los microservicios, separados por coma"
+  type        = string
+}
+
 variable "vpc_id" {
   description = "VPC ID donde correr ECS"
   type        = string
